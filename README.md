@@ -56,6 +56,7 @@ Persistent local notes across files, suitable for editor integration
   - list
   - treelist
   - close
+  
   it does something different from usual
 
 ## Why does it do it that way
