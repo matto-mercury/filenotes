@@ -63,6 +63,7 @@ library
         shelly,
         text,
         time,
+        vector,
         xdg-basedir
     hs-source-dirs:
         src

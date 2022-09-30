@@ -5,8 +5,10 @@ import Control.Monad.Except
 import Control.Monad.Reader
 import Data.Attoparsec.Text qualified as P
 import Data.ByteString qualified as B8
+import Data.Csv
 import Data.Text hiding (dropWhile, filter, lines, unwords)
 import Data.Text qualified as T (dropWhile, filter, lines, unwords)
+import Data.Text.Encoding (decodeUtf8)
 import Data.Time.Clock (UTCTime (..), getCurrentTime)
 import Shelly
 import System.Environment (getArgs, withArgs)
@@ -23,6 +25,14 @@ data StopCondition
 
 newtype Tag = Tag { unTag :: Text }
   deriving (Eq, Show)
+
+instance FromField Tag where
+  -- this says "any Text can be a Tag", which is inline with our newtype
+  -- but maybe not usage or intuition?
+  parseField t = pure . Tag $ decodeUtf8 t
+
+instance ToField Tag where
+  toField (Tag t) = toField t
 
 data Command
   = MakeNote (Maybe Tag) Text
